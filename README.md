@@ -1,4 +1,4 @@
-# deno-1.3.3
+# Deno v1.3.3
 A project to get the Deno's Wisdom | 2020 &amp; Up
 
 0. Intro to TS
@@ -25,3 +25,4 @@ A project to get the Deno's Wisdom | 2020 &amp; Up
         // new tab to keep node also running
         $ nodemon intro.js
         ```
+    4. Documentation: https://www.typescriptlang.org/docs
