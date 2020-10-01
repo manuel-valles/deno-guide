@@ -68,3 +68,56 @@ A project to get the Deno's Wisdom | 2020 &amp; Up
      ```typescript
      console.table(Deno.metrics());
      ```
+
+## 2. Deno Vs Node
+
+- Main game changers:
+
+  - First class TypeScript
+  - ES Modules
+    - `import "https://deno.land/std@0.71.0/examples/chat/server.ts"`
+  - Security First
+    - `$ deno run --allow-net ./deno/welcome-example.ts`
+  - Decentralized modules
+    - We don't have to use **npm** (Microsoft)
+    - We can use many places to collect the packages by just a URL with the script. e.g.: https://deno.land/x
+  - Standard Library -> https://deno.land/std@0.71.0
+  - Built In Tooling (testing, formatting, file watchers,...)
+  - Browser Compatible API (window, fetch,...)
+  - Single Executable (deno.exe)
+  - Async returns Promises (Promises in Deno translated to Futures in Rusty and vice versa)
+  - Opinionated Modules (https://deno.land/manual/contributing/style_guide)
+
+- Permissions:
+
+  - You need to allow some permissions depending on the access level. For example:
+    ```typescript
+    console.log(`Hello ${Deno.env.get('USERNAME')}`);
+    ```
+    - `$ deno run --allow-env ./deno/permissions.ts`
+    - `$ deno run --allow-all ./deno/permissions.ts`
+    - `$ deno run -A ./deno/permissions.ts`
+  - You can also create a script and install it globally (it takes the name of the parent path):
+
+    - `$ deno install --allow-env main.ts`
+
+  - **Drake** is a Make-like task runner (build automation tool that automatically builds executable programs and libraries from source code by reading files called _Makefiles_ which specify how to derive the target program) for Deno inspired by Make, Rake and Jake. https://deno.land/x/drake@v1.4.2
+
+    ```typescript
+    import {
+      desc,
+      run,
+      task,
+      sh,
+    } from 'https://deno.land/x/drake@v1.4.2/mod.ts';
+
+    desc('Minimal Drake task');
+    task('hello', [], async function () {
+      console.log('Hello from Drake!');
+      await sh('deno run --allow-env main.ts');
+    });
+
+    run();
+    ```
+
+    `$ deno run -A Drakefile.ts hello`
