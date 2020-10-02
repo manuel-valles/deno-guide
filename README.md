@@ -1,4 +1,4 @@
-# Deno v1.3.3
+# Deno Guide (v>1.4.2)
 
 A project to get the Deno's Wisdom | 2020 &amp; Up
 
