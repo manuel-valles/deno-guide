@@ -1,0 +1,1 @@
+export const convert = (input: string): string => input.toLowerCase() === 'node' ? input.split('').sort().join('') : input

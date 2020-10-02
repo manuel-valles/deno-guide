@@ -35,6 +35,9 @@ A project to get the Deno's Wisdom | 2020 &amp; Up
 
    - https://deno.land/
    - (Admin) `$ choco install deno`
+   - Version: `$ deno -V`
+   - (Admin) Upgrade to latest version: `$ deno upgrade`
+   - Commands: `$ deno --help`
    - **NOTE:** Deno has a built-in TypeScript compiler: `$ deno run intro.ts`
 
 2. VSCode Extension:
@@ -55,7 +58,7 @@ A project to get the Deno's Wisdom | 2020 &amp; Up
    - _Rust_ uses the Tokio library for the _Thread Pool_. **Tokio** is a runtime for writing reliable, asynchronous, and slim applications with the Rust programming language.
    - Similarities with NodeJS System:
 
-     - NodeJS Bidings ~ Rust
+     - NodeJS Bindings ~ Rust
      - Libuv ~ Tokio
 
      ![NodeSystem](/images/NodeArchitecture.jpg)
@@ -121,3 +124,51 @@ A project to get the Deno's Wisdom | 2020 &amp; Up
     ```
 
     `$ deno run -A Drakefile.ts hello`
+
+## 3. Deno Modules
+
+- **ES Modules**: Any JavaScript or TypeScript file. In Deno, the file extension must be provided for imports (**.js, .ts**). `import {example} from "./intro.js"`
+- To get the info of a Module:
+
+  - `$ deno info ./03-deno-modules/example-import.ts`
+
+  ```
+    local: C:\Users\Manu\Documents\Learning\Deno\deno-1.3.3\03-deno-modules\example-import.ts
+    type: TypeScript
+    compiled: C:\Users\Manu\AppData\Local\deno\gen\file\C\Users\Manu\Documents\Learning\Deno\deno-1.3.3\03-deno-modules\example-import.ts.js
+    deps: 2 unique (total 371B)
+    file:///C:/Users/Manu/Documents/Learning/Deno/deno-1.3.3/03-deno-modules/example-import.ts (137B)
+    ├── file:///C:/Users/Manu/Documents/Learning/Deno/deno-1.3.3/03-deno-modules/example-export.ts (122B)
+    └── https://deno.land/std@0.71.0/examples/welcome.ts (112B)
+  ```
+
+- **Standard Library** contains all the modules (without external dependencies) maintained by the Deno team. For example, `$ deno info https://deno.land/std@0.71.0/examples/welcome.ts`
+
+  ```
+    local: C:\Users\Manu\AppData\Local\deno\deps\https\deno.land\18b31e735f535d082cbca4e4425bd22c7ebdbaf8899707498079a6a624527e3e
+    type: TypeScript
+    compiled: C:\Users\Manu\AppData\Local\deno\gen\https\deno.land\18b31e735f535d082cbca4e4425bd22c7ebdbaf8899707498079a6a624527e3e.js
+    deps: 0 unique (total 112B)
+    https://deno.land/std@0.71.0/examples/welcome.ts (112B)
+  ```
+
+- **Third Party Modules** contains all the modules created by the Deno Community.
+
+- **Caching** is used to storage data what speeds up the processes. Deno caches remote imports in a special directory specified by the _DENO_DIR_ environment variable (e.g. Windows: _C:\Users\Manu\AppData\Local\deno_). The next time you run the program, no downloads will be made. If the program hasn't changed, it won't be recompiled either.
+
+  - To force/reload the module (downloads & recompilation): `$ deno run --reload ./03-deno-modules/example-import.ts`
+  - To change the DENO_DIR path (Windowds): `$ export DENO_DIR=./deno_dir`
+  - More info: https://deno.land/manual/linking_to_external_code
+
+- _Pika_ or _Skypack_ is a CDN that allow you to use any npm package anywhere (**NPM for Deno**): https://www.skypack.dev/
+
+- A best practice for the dependencies is to allocate all of them in a file **deps.ts** (similar what _package.json_ does in NodeJS). This way, we can also manage the versioning.
+
+- By using a lock file (with the **--lock** command line flag), you can ensure that the code pulled from a URL is the same as it was during initial development.
+
+  - `$ deno cache --lock=./03-deno-modules/src/lock.json --lock-write ./03-deno-modules/src/deps.ts`
+  - More info: https://deno.land/manual/linking_to_external_code/integrity_checking
+
+- Deno provides some **built in tooling** that is useful when working with JavaScript and TypeScript: https://deno.land/manual/tools
+  - Example **Bundle**: deno bundle ./03-deno-modules/example-import.ts ./03-deno-modules/example.bundle.ts
+    - This will output a single JavaScript file, which includes all dependencies of the specified input (~ Webpack).
