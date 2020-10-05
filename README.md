@@ -172,3 +172,14 @@ A project to get the Deno's Wisdom | 2020 &amp; Up
 - Deno provides some **built in tooling** that is useful when working with JavaScript and TypeScript: https://deno.land/manual/tools
   - Example **Bundle**: deno bundle ./03-deno-modules/example-import.ts ./03-deno-modules/example.bundle.ts
     - This will output a single JavaScript file, which includes all dependencies of the specified input (~ Webpack).
+
+## 4. Deno Testing
+
+Deno includes the following testing features:
+
+- The test runner in the CLI: `$ deno test`
+  - Run a specific test file: `$ deno test src/models/planets.test.ts`
+  - Help command: `$ deno test --help`
+  - Filter by the test name: `$ deno test --filter short`
+- Assertions in the Standard Library: https://deno.land/manual@v1.4.4/testing
+- Built-in test fixtures with `Deno.test()`: https://doc.deno.land/builtin/stable#Deno.test
